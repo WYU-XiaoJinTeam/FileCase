@@ -63,7 +63,7 @@
         });
 
         //右键点击事件
-        $('.tree').bind("contextmenu", function (e) {   //限制鼠标右键点击
+       /* $('.tree').bind("contextmenu", function (e) {   //限制鼠标右键点击
             return false;
         });
         $('.tree').children().contextMenu('myMenu1', {
@@ -84,11 +84,11 @@
                     alert('Trigger was ' + t.id + '\nAction was Delete');
                 }
             }
-        });
+        });*/
 
         //选中相片div
         $('.photo').click(function () {
-            $(this).toggleClass('choose');
+            $(this).toggleClass('choosepicture');
         });
 
         //移除选中的项
