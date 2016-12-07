@@ -50,14 +50,14 @@
 
         //列表显示和图标显示切换
         $('#btn1').click(function () {
-            $('#img1').attr('src', "../FileCase/img/list1.jpg");
-            $('#img2').attr('src', "../FileCase/img/icon0.gif");
+            $('#img1').attr('src', '/Images/list1.jpg');
+            $('#img2').attr('src', '/Images/icon0.gif');
             $("#public_List").css('display', 'inline');
             $("#public_Img").css('display', 'none');
         });
         $('#btn2').click(function () {
-            $('#img2').attr('src', "../FileCase/img/icon1.gif");
-            $('#img1').attr('src', "../FileCase/img/list0.jpg");
+            $("#img2").attr('src', '/Images/icon1.gif');
+            $('#img1').attr('src', '/Images/list0.jpg');
             $("#public_List").css('display', 'none');
             $("#public_Img").css('display', 'inline');
         });
