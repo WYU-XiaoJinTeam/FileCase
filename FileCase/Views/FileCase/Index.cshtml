@@ -1,0 +1,419 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>文件柜</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="~/Content/filecase.css" />
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.contextmenu.r2.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.treemenu.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/ssi-uploader.js"></script>
+    <script type="text/javascript" src="~/Scripts/new_file.js"></script>
+    <script type="text/javascript" src="~/Scripts/Style.js"></script>
+</head>
+<body>
+    <!--删除的弹出层-->
+    <div class="modal fade modalfade" id="myDelete" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modalwrap">
+                <div class="modal-header modaltop">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">温馨提示！</h4>
+                </div>
+                <div class="modal-body modalmain">
+                    确定删除选中内容吗？
+                </div>
+                <div class="modal-footer modalbottom">
+                    <button type="button" id="deleteelement" class="btn btn-primary" data-dismiss="modal">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!--上传文件的弹出层-->
+    <div class="modal fade" id="myUpload" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modaltop">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">多文件上传</h4>
+                </div>
+                <div class="modal-body modalupload">
+                    <input type="file" id="ssi-upload" multiple name="file" />
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!--重命名的弹出层-->
+    <div class="modal fade modalfade" id="myRename" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modalwrap">
+                <div class="modal-header modaltop">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">文件重命名</h4>
+                </div>
+                <div class="modal-body modalmain">
+                    <span>文件名</span>
+                    <input type="text" class="form-control" />
+                </div>
+                <div class="modal-footer modalbottom">
+                    <button type="button" class="btn btn-primary" onclick="">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!--权限设置的弹出层-->
+    <div class="modal fade modalfade" id="myPrivilige" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modalwrap">
+                <div class="modal-header modaltop">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">权限设置</h4>
+                </div>
+                <div class="modal-body modalmain">
+                    <span title="自动获取上一级目录的查看权限">查看权限</span>
+                    <textarea class="form-control"></textarea>
+                    <div class="set">
+                        <button type="button" onclick="">添加</button>
+                        <button type="reset" onclick="">重置</button>
+                    </div>
+                    <span title="自动获取上一级目录的编辑权限">编辑权限</span>
+                    <textarea class="form-control"></textarea>
+                    <div class="set">
+                        <button type="button" onclick="">添加</button>
+                        <button type="reset" onclick="">重置</button>
+                    </div>
+                    <span title="自动获取上一级目录的删除权限">删除权限</span>
+                    <textarea class="form-control"></textarea>
+                    <div class="set">
+                        <button type="button" onclick="">添加</button>
+                        <button type="reset" onclick="">重置</button>
+                    </div>
+                </div>
+                <div class="modal-footer modalbottom">
+                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!--新建的弹出层-->
+    <div class="modal fade modalfade" id="myNew" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modalwrap">
+                <div class="modal-header modaltop">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">新建文件夹</h4>
+                </div>
+                <div class="modal-body modalmain">
+                    <span>文件名</span>
+                    <input type="text" class="form-control" />
+                </div>
+                <div class="modal-footer modalbottom">
+                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!--右键菜单-->
+    <div class="contextMenu" id="myMenu1">
+        <ul>
+            <li id="new" class="glyphicon glyphicon-plus-sign"><span class="rightitem">新建文件夹</span></li>
+            <li id="privilege" class="glyphicon glyphicon-user"><span class="rightitem">权限设置</span></li>
+            <li id="trash" class="glyphicon glyphicon-repeat"><span class="rightitem">刷新</span></li>
+            <li id="rename" class="glyphicon glyphicon-pencil"><span class="rightitem">重命名</span></li>
+            <li id="delete" class="glyphicon glyphicon-trash"><span class="rightitem">删除</span></li>
+        </ul>
+    </div>
+    <div>
+        <!--head--头部-->
+        <div class="header">
+            <div class="headbtn-group">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" title="后退">
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" title="前进">
+                        <span class="glyphicon glyphicon-arrow-right"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" title="刷新">
+                        <span class="glyphicon glyphicon-refresh"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-5 -collg5">
+                <div class="input-group">
+                    <span class="input-group-btn"><button class="btn btn-default" title="我的文档"><span class="glyphicon glyphicon-home"></span></button></span>
+                    <ol class="breadcrumb leadline">
+                        <li><a href="#">个人文件夹</a></li>
+                        <li><a href="#">其他文件</a></li>
+                        <li><a href="#">学习资料</a></li>
+                        <li><a href="#">视频</a></li>
+                    </ol>
+                    <span class="input-group-btn"><button class="btn btn-default" title="添加到收藏夹"><img src="img/shou.gif" /></button></span>
+                </div>
+            </div>
+            <div class="col-lg-3 -collg3">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="search for" />
+                    <span class="input-group-btn"><button type="button" class="btn btn-default active" title="搜索"><span class="glyphicon glyphicon-search"></span></button></span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="wrap">
+            <div class="left">
+                <ul class="tree">
+                    <li><a class="collection" href="#124">收藏夹</a></li>
+                    <li>
+                        <a class="public" href="#546">公共文件夹</a>
+                        <ul>
+                            <li>
+                                <a class="suba" href="#">部门文件</a>
+                                <ul>
+                                    <li><a class="suba" href="#">策划部</a></li>
+                                    <li><a class="suba" href="#">技术部</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="suba" href="#">其他文件</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="private" href="#">个人文件夹</a>
+                        <ul>
+                            <li class="active"><a class="suba" href="#">设计方案</a></li>
+                            <li>
+                                <a class="suba" href="#">其他文件</a>
+                                <ul>
+                                    <li><a class="suba" href="#">教程视频</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="structure" href="#">组织架构</a>
+                        <ul>
+                            <li class="active"><a class="suba" href="#">设计部</a></li>
+                            <li>
+                                <a class="suba" href="#">组织部</a>
+                                <ul>
+                                    <li>
+                                        <a class="suba" href="#">日志查看</a>
+                                        <ul>
+                                            <li><a class="suba" href="#jobs1">日志1</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="suba" href="#jobs3">资料</a>
+                                        <ul>
+                                            <li><a class="suba" href="#jobs2">资料2</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a class="delete" href="#about">回收站</a></li>
+                </ul>
+            </div>
+
+            <div class="right">
+                <div class="righttop">
+                    <div class="toppleft btn-group">
+                        <button type="button" class="btn btn-default newfilebutton" data-toggle="modal" data-target="#myNew">
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                            <span class="topspan">新建文件夹</span>
+                        </button>
+                        <button type="button" class="btn btn-default likebutton" data-toggle="modal" data-target="#myUpload">
+                            <span class="glyphicon glyphicon-cloud-upload"></span>
+                            <span class="topspan">上传</span>
+                        </button>
+                        <div class="btn-group">
+                            <button class="btn btn-default likebutton dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-align-justify"></span>
+                                <span class="topspan">更多</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu more">
+                                <li>
+                                    <button class="btn btn-link">
+                                        <span class="glyphicon glyphicon-download"></span>
+                                        下载
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-link">
+                                        <span class="glyphicon glyphicon-share"></span>
+                                        分享
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-link" data-toggle="modal" data-target="#myPrivilige" data-placement="bottom">
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        权限设置
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-link">
+                                        <span class="glyphicon glyphicon-file"></span>
+                                        复制
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-link" data-toggle="modal" data-target="#myRename" data-placement="bottom">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                        重命名
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-link">
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        添加到收藏夹
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-link">
+                                        <span class="glyphicon glyphicon-transfer"></span>
+                                        移动
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-link" data-toggle="modal" data-target="#myDelete" data-placement="bottom">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                        删除
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-link">
+                                        <span class="glyphicon glyphicon-repeat"></span>
+                                        刷新
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div id="chosen_1" class="toppright btn-group">
+                        <button id="btn1" class="btn btn-default likebutton">
+                            <img id="img1" src="img/list1.gif" />
+                        </button>
+                        <button id="btn2" class="btn btn-default likebutton">
+                            <img id="img2" src="img/icon0.gif" />
+                        </button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="rightmain">
+                    <div id="public_List">
+                        <div id="tab_head">
+                            <div class="allcheck"><input type="checkbox" id="selAll" /></div>
+                            <div class="item_head">名称</div>
+                            <div class="item_head">大小</div>
+                            <div class="item_head">创建人</div>
+                            <div class="item_head">修改日期</div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <table>
+                            <tr>
+                                <td><input type="checkbox" name="checkAll" /></td>
+                                <td>项目文件</td>
+                                <td>87kB</td>
+                                <td>系统管理员</td>
+                                <td>2016-8-4 21:45:14</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="checkAll" /></td>
+                                <td>国外非常规油气勘察技术研究</td>
+                                <td>8MB</td>
+                                <td>系统管理员</td>
+                                <td>2016-8-4 21:45:14</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="checkAll" /></td>
+                                <td>上游油气战略研究</td>
+                                <td>14kB</td>
+                                <td>系统管理员</td>
+                                <td>2016-8-4 21:45:14</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="checkAll" /></td>
+                                <td>demo</td>
+                                <td>158kB</td>
+                                <td>杨国锋</td>
+                                <td>2016-8-4 21:45:14</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="checkAll" /></td>
+                                <td>个人文件</td>
+                                <td>25MB</td>
+                                <td>系统管理员</td>
+                                <td>2016-8-4 21:45:14</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div id="public_Img">
+                        <div class="photo">
+                            <div><img src="img/11.jpg" /></div>
+                            <span>1111</span>
+                        </div>
+                        <div class="photo">
+                            <div><img src="img/22.JPG" /></div>
+                            <span>2222</span>
+                        </div>
+                        <div class="photo">
+                            <div><img src="img/33.JPG" /></div>
+                            <span>3333</span>
+                        </div>
+                        <div class="photo">
+                            <div><img src="img/44.JPG" /></div>
+                            <span>4444</span>
+                        </div>
+                        <div class="photo">
+                            <div><img src="img/55.JPG" /></div>
+                            <span>5555</span>
+                        </div>
+                        <div class="photo">
+                            <div><img src="img/66.JPG" /></div>
+                            <span>6666</span>
+                        </div>
+                        <div class="photo">
+                            <div><img src="img/bg2.jpg" /></div>
+                            <span>7777</span>
+                        </div>
+                        <div class="photo">
+                            <div><img src="img/bg1.jpg" /></div>
+                            <span>8888</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="rightbottom">
+                    <input type="hidden" id="current_page" />
+                    <div id="show_allpage">
+                        <span>共</span>
+                        <span id="pages"></span>
+                        <span>页</span>
+                        <span class="every_page">每页显示</span>
+                        <span id="items_of_page"></span>
+                        <span>条记录</span>
+                    </div>
+                    <ul class="pagination" id="page_navigation"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
