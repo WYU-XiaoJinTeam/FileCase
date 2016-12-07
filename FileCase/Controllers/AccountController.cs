@@ -134,16 +134,19 @@ namespace FileCase.Controllers
             }
         }
 
-        //
-        // GET: /Account/Register
+        /// <summary>
+        /// 登录页面
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
-        //
-        // POST: /Account/Register
+        /// <summary>
+        /// 登录请求
+        /// </summary>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
