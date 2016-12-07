@@ -72,37 +72,43 @@
 	
 .tree li a:hover{
 	background-color:#E6E6FA;}
-	
-.collection{
-	background: url(../img/cang.gif);
-	background-repeat: no-repeat;
-	padding: 0 0 2px 20px;
-	margin-left: 10px;}
-	
-.public{
-	background: url(../img/computers.gif);
-	background-repeat: no-repeat;
-	padding: 0 0 2px 20px;}
-	
-.private{
-	background: url(../img/user.gif);
-	background-repeat: no-repeat;
-	padding: 0 0 2px 20px;}
-	
-.structure{
-	background: url(../img/home-1.gif);
-	background-repeat: no-repeat;
-	padding: 0 0 2px 20px;}
-	
-.delete{
-	background: url(../img/deletes.gif);
-	background-repeat: no-repeat;
-	padding: 0 0 2px 20px;}
-	
-.suba{
-	background: url(../img/st_folder.gif);
-	background-repeat:no-repeat;
-	padding: 0 0 2px 20px;}
+
+.collection {
+    background-image: url('../Images/cang.gif');
+    background-repeat: no-repeat;
+    padding: 0 0 2px 20px;
+    margin-left: 10px;
+}
+
+.public {
+    background-image: url('../Images/computers.gif');
+    background-repeat: no-repeat;
+    padding: 0 0 2px 20px;
+}
+
+.private {
+    background-image: url('../Images/user.gif');
+    background-repeat: no-repeat;
+    padding: 0 0 2px 20px;
+}
+
+.structure {
+    background-image: url('../Images/home-1.gif');
+    background-repeat: no-repeat;
+    padding: 0 0 2px 20px;
+}
+
+.delete {
+    background-image: url('../Images/deletes.gif');
+    background-repeat: no-repeat;
+    padding: 0 0 2px 20px;
+}
+
+.suba {
+    background-image: url('../Images/st_folder_open.gif');
+    background-repeat: no-repeat;
+    padding: 0 0 2px 20px;
+}
 	
 
 	/* For treemenu.js */
