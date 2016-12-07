@@ -51,7 +51,7 @@
         //列表显示和图标显示切换
         $('#btn1').click(function () {
             $('#img1').attr('src', 'img/list1.gif');
-            $('#img2').attr('src', 'img/icon0.gif');
+            $('#img2').attr('src', "~/img/icon0.gif");
             $("#public_List").css('display', 'inline');
             $("#public_Img").css('display', 'none');
         });
