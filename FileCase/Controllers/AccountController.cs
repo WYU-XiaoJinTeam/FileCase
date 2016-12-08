@@ -63,6 +63,12 @@ namespace FileCase.Controllers
 
         //
         // POST: /Account/Login
+        /// <summary>
+        /// 登录检验
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -74,7 +80,11 @@ namespace FileCase.Controllers
             }
 
             // This doesn't count login failures towards account lockout
+            //这不会记入到为执行账户锁定而统计的登录失败次数中
             // To enable password failures to trigger account lockout, change to shouldLockout: true
+            //若要在多次输入错误密码的情况下触发账户锁定，请更改为shouldLockout: true
+            //SignInManager：继承SignInManager，该类是利用UserManager执行一系列登录操作
+            //PasswordSignInAsync,这个方法它不仅负责查询用户,登入用户,还负责记录用户登入记录(登入失败几次,对于被锁定用户的处理…).
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -86,7 +96,7 @@ namespace FileCase.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "无效的登录尝试。");
                     return View(model);
             }
         }
@@ -134,16 +144,19 @@ namespace FileCase.Controllers
             }
         }
 
-        //
-        // GET: /Account/Register
+        /// <summary>
+        /// 登录页面
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
-        //
-        // POST: /Account/Register
+        /// <summary>
+        /// 登录请求
+        /// </summary>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -162,12 +175,11 @@ namespace FileCase.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
                     return RedirectToAction("Index", "Home");
                 }
+                //AddErrors方法添加的是模型级错误,通过@Html,ValidationSummary()显示错误信息
                 AddErrors(result);
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }

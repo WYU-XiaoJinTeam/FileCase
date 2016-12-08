@@ -217,6 +217,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\FCContext.cs" />
     <Compile Include="Models\Files.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Logs.cs" />
