@@ -25,11 +25,12 @@ namespace FileCase
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login"),
+                LoginPath = new PathString("/Account/Login"),//当访问未授权页面时将会自定跳转到这个位置
+                CookieName = "CaseFileCookie",//自定义Cookie名称
                 Provider = new CookieAuthenticationProvider
                 {
-                    // Enables the application to validate the security stamp when the user logs in.
-                    // This is a security feature which is used when you change a password or add an external login to your account.  
+                    //允许应用程序在用户登录时验证安全标记
+                    // 这是一项安全功能，当你更改密码或者向账户添加外部登录名时，将使用此功能
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
@@ -64,5 +65,6 @@ namespace FileCase
             //    ClientSecret = ""
             //});
         }
+        //因此用户浏览器Cookie登录时不走数据库的，用Cookie登录即使你的数据库刚刚清空也是会登录成功的
     }
 }

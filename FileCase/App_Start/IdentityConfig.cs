@@ -44,19 +44,27 @@ namespace FileCase
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // Configure validation logic for usernames
+            //配置用户名的验证逻辑
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
+                //当为true时，用户名只能含有字母数字字符
                 AllowOnlyAlphanumericUserNames = false,
+                //当为true时，邮件地址必须唯一
                 RequireUniqueEmail = true
             };
-
+            //配置密码的验证逻辑
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
+                //指定合法口令的最小长度
                 RequiredLength = 6,
+                //当设置为true时，合法口令必须含有非字母和数字的字符
                 RequireNonLetterOrDigit = true,
+                //当设置为true时，合法口令必须含有数字
                 RequireDigit = true,
+                //当设置为true时，合法口令必须含有小写字母
                 RequireLowercase = true,
+                //当设置为true时，合法口令必须含有大写字母
                 RequireUppercase = true,
             };
 
