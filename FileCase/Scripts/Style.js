@@ -42,11 +42,12 @@
         }
     }
 
+    //文件树打开延时
+    $(function () {
+        $(".tree").treemenu({ delay: 300 }).openActive();
+    });
+
     $(document).ready(function () {
-        //文件树打开延时
-        $(function () {
-            $(".tree").treemenu({ delay: 300 }).openActive();
-        });
 
         //列表显示和图标显示切换
         $('#btn1').click(function () {
