@@ -109,26 +109,7 @@
     background-repeat: no-repeat;
     padding: 0 0 2px 20px;
 }
-	
 
-	/* For treemenu.js */
-.treemenu li { list-style: none; }
-
-.treemenu .toggler {
-    cursor: pointer;
-}
-
-.treemenu .toggler:before {
-    display: inline-block;
-    margin-right: 2pt;
-}
-
-li.tree-empty > .toggler { color: #aaa;margin-right: 7px;}
-li.tree-empty > .toggler:before { content:'';}
-li.tree-closed > .toggler:before {content: url(../img/st_icon.png);}
-li.tree-opened > .toggler:before {content: url(../img/open.gif);}
-
-	
 
 /*中间右边样式*/	
 .right {
